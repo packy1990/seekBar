@@ -1615,9 +1615,8 @@ public class IndicatorSeekBar extends View {
      * @return current progress in float type.
      */
     public synchronized float getProgressFloat() {
-        if (mTicksCount != 0) mProgress = findClosest(mProgressArr, mProgress);
         BigDecimal bigDecimal = BigDecimal.valueOf(mProgress);
-        return bigDecimal.setScale(mScale, BigDecimal.ROUND_FLOOR).floatValue();
+        return bigDecimal.setScale(mScale, BigDecimal.ROUND_HALF_UP).floatValue();
     }
 
     /**
