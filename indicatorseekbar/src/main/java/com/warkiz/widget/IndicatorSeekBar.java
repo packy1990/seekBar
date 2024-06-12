@@ -1368,13 +1368,13 @@ public class IndicatorSeekBar extends View {
 
     }
 
-    private void updateStayIndicator() {
+    public void updateStayIndicator() {
         if (!mIndicatorStayAlways || mIndicator == null) {
             return;
         }
         mIndicator.setProgressTextView(getIndicatorTextString());
         mIndicatorContentView.measure(0, 0);
-        int measuredWidth = mIndicatorContentView.getWidth();
+        int measuredWidth = mIndicatorContentView.getMeasuredWidth();
         float thumbCenterX = getThumbCenterX();
 
         if (mScreenWidth == -1) {
@@ -1392,7 +1392,7 @@ public class IndicatorSeekBar extends View {
             arrowOffset = (int) (thumbCenterX - indicatorOffset - measuredWidth / 2);
         } else if (thumbCenterX - measuredWidth / 2 < 0) {
             indicatorOffset = 0;
-            arrowOffset = -(int) (measuredWidth / 2 - thumbCenterX);
+            arrowOffset = 0;
         } else {
             indicatorOffset = (int) (getThumbCenterX() - measuredWidth / 2);
             arrowOffset = 0;
