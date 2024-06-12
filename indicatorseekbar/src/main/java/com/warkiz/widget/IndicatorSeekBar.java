@@ -31,6 +31,9 @@ import android.view.animation.Animation;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.OptionalInt;
 
 /**
  * created by zhuangguangquan on 2017/9/1
@@ -1268,8 +1271,34 @@ public class IndicatorSeekBar extends View {
     private float calculateProgress(float touchX) {
         lastProgress = mProgress;
         mProgress = mMin + (getAmplitude()) * (touchX - mPaddingLeft) / mSeekLength;
+        if (mTicksCount != 0) mProgress = findClosest(mProgressArr, mProgress);
         return mProgress;
     }
+
+    public float findClosest(float[] sortedArr, float x) {
+        int left = 0;
+        int right = sortedArr.length - 1;
+        float closest = sortedArr[0]; // 初始化最接近的值为数组的第一个元素
+
+        while (left <= right) {
+            int mid = left + (right - left) / 2;
+
+            if (Math.abs(sortedArr[mid] - x) < Math.abs(closest - x)) {
+                closest = sortedArr[mid]; // 更新最接近的值
+            }
+
+            if (sortedArr[mid] == x) {
+                return sortedArr[mid]; // 如果找到精确匹配，直接返回
+            } else if (sortedArr[mid] < x) {
+                left = mid + 1; // 在右侧继续查找
+            } else {
+                right = mid - 1; // 在左侧继续查找
+            }
+        }
+
+        return closest; // 返回找到的最接近的值
+    }
+
 
     private float calculateTouchX(float touchX) {
         float touchXTemp = touchX;
@@ -1345,7 +1374,7 @@ public class IndicatorSeekBar extends View {
         }
         mIndicator.setProgressTextView(getIndicatorTextString());
         mIndicatorContentView.measure(0, 0);
-        int measuredWidth = mIndicatorContentView.getMeasuredWidth();
+        int measuredWidth = mIndicatorContentView.getWidth();
         float thumbCenterX = getThumbCenterX();
 
         if (mScreenWidth == -1) {

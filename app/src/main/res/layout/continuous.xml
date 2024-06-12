@@ -76,7 +76,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:isb_indicator_color="@color/color_blue"
-                app:isb_progress="76"
                 app:isb_show_indicator="rectangle"
                 app:isb_show_tick_texts="true"
                 app:isb_progress_value_float="true"
