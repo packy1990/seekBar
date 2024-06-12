@@ -1368,7 +1368,7 @@ public class IndicatorSeekBar extends View {
 
     }
 
-    public void updateStayIndicator() {
+    private void updateStayIndicator() {
         if (!mIndicatorStayAlways || mIndicator == null) {
             return;
         }
@@ -1392,7 +1392,7 @@ public class IndicatorSeekBar extends View {
             arrowOffset = (int) (thumbCenterX - indicatorOffset - measuredWidth / 2);
         } else if (thumbCenterX - measuredWidth / 2 < 0) {
             indicatorOffset = 0;
-            arrowOffset = 0;
+            arrowOffset = -(int) (measuredWidth / 2 - thumbCenterX);
         } else {
             indicatorOffset = (int) (getThumbCenterX() - measuredWidth / 2);
             arrowOffset = 0;
